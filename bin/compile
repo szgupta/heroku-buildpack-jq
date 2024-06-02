@@ -26,6 +26,14 @@ PROFILE_PATH="$PROFILE_DIR/jq.sh"
 
 echo "-----> Installing jq@1.6 with oniguruma support"
 
+if command -v jq > /dev/null; then
+  echo " !     jq is already installed! It has been added to both Heroku's build and run images as of:" >&2
+  echo " !     https://devcenter.heroku.com/changelog-items/2893" >&2
+  echo " !     " >&2
+  echo " !     As such, this buildpack is no longer required, and can be removed using:" >&2
+  echo " !     $ heroku buildpacks:remove https://github.com/szgupta/heroku-buildpack-jq.git" >&2
+fi
+
 # fetch and compile jq with oniguruma support, unless its in the cache 
 if [ -d "$JQ_CACHE_DIR" ]; then
   echo "jq already compiled - found in cache" | indent
